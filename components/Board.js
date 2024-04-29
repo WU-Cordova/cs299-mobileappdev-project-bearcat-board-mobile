@@ -414,7 +414,7 @@ const styles = StyleSheet.create({
     },
     posterContainer: {
         overflow: 'hidden',
-        width: screenWidth * 0.85,
+        width: screenWidth * 0.80,
         padding: 10,
         marginBottom: 10,
         backgroundColor: '#FFFFFF',
