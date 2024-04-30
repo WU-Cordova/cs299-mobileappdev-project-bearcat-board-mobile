@@ -206,6 +206,14 @@ export default function Board() {
           setInput2(text);
         }
       };
+      function convertTime(time) {
+        if (!time) return ''; // If time is empty, return an empty string
+        const [hour, minute] = time.split(':').map(Number);
+        const isPM = hour >= 12;
+        const adjustedHour = hour % 12 || 12; // Ensure 0 becomes 12
+        const formattedTime = `${adjustedHour}:${minute.toString().padStart(2, '0')} ${isPM ? 'PM' : 'AM'}`;
+        return formattedTime;
+    }
 
     return (
         <ScrollView contentContainerStyle={styles.scrollContainer}>
@@ -230,8 +238,11 @@ export default function Board() {
                             <Text style={styles.posterTitle}>{poster.title}</Text>
 
                             <Text style={styles.posterInfo}>
-                                {poster.created_by} {new Date(poster.date + 'T00:00:00').toLocaleDateString('en-US', { timeZone: 'America/Los_Angeles', month: 'long', day: '2-digit', year: 'numeric' })} {poster.start_time}
-                                {poster.end_time ? `-${poster.end_time}` : ''} {poster.location}
+                            {new Date(poster.date + 'T00:00:00').toLocaleDateString('en-US', { timeZone: 'America/Los_Angeles', month: 'long', day: '2-digit', year: 'numeric'})}{poster.start_time ? `, ${convertTime(poster.start_time)}` : ''}
+                                {poster.end_time ? ` - ${convertTime(poster.end_time)}` : ''}
+                            </Text>
+                            <Text style={styles.posterInfo}>
+                                {poster.location}
                             </Text>
 
                             <TouchableOpacity
